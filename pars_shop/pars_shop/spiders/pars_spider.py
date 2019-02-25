@@ -26,9 +26,14 @@ class PycoderSpider(scrapy.Spider):
         all_data = []
         for v in all_rovs:
             name_row = v.xpath('div[@class="table-cell cell-4"]/text()').get()
-            data = v.xpath('div[@class="table-cell cell-8"]/p/text()').get()
-            abcd[name_row] = data
-            row.append(name_row)
-            all_data.append(data)
+            if  name_row != None and 'Размеры' in name_row:
+                name_row = v.xpath('div[@class="table-cell cell-4"]/text()').get()
+                data = v.xpath('div[@class="table-cell cell-8"]/p/text()').re(r"\d+")
+                abcd[name_row] = data
+                row.append(name_row)
+                all_data.append(data)
+                print(name_row, data)
 
+        import pdb
+        pdb.set_trace()
         yield item
