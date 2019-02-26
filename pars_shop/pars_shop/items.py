@@ -9,7 +9,9 @@ import scrapy
 
 
 class ParsItem(scrapy.Item):
-    name_row = scrapy.Field()
-    data = scrapy.Field()
+    name = scrapy.Field()
+    length = scrapy.Field()
+    image_urls = scrapy.Field()
+    images = scrapy.Field()
 
 
