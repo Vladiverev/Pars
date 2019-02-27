@@ -3,9 +3,6 @@ import requests
 import re
 import urllib.request
 
-urllib.request.urlretrieve("http://www.digimouth.com/news/media/2011/09/google-logo.jpg", "local-filename.jpg")
-
-
 def get_response(url):
     headers = {'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:52.0) Gecko/20100101 Firefox/52.0'}
 
@@ -32,10 +29,16 @@ def get_product_image(url, name):
     return name
 
 
-def getlistings(base_url, home_url, img=None):
-    list_url = get_page_url(base_url)
+def getlistings(product_name, img=None):
 
-    response = get_response(home_url + list_url[0])
+    home_page = 'https://hotline.ua'
+    product_url = 'https://hotline.ua/sr/?q=' + product_name
+    print(product_url)
+
+    list_url = get_page_url(product_url)
+    print(list_url)
+    response = get_response(home_page + list_url[0])
+
     soup = BeautifulSoup(response.text, 'html.parser')
 
     product_params = {}
@@ -60,12 +63,9 @@ def getlistings(base_url, home_url, img=None):
 
 
 if __name__ == "__main__":
-    home_page = 'https://hotline.ua'
-    baseurl = 'https://hotline.ua/sr/?q='
-    product = 'Sony PlayStation'
 
-    url = baseurl + product
+    product = 'LEGO Juniors Эластика'
 
-    product_params = getlistings(url, home_page, img=True)
+    product_params = getlistings(product_name=product, img=True)
 
     print(product_params)
